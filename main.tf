@@ -43,6 +43,17 @@ module "lbc-controller" {
 
 }
 
+module "ingress" {
+  source = "./modules/ingressservice"
+  eks-fargate-cluster = module.eks.clustername
+  oidc_arn       = module.eks.oidc.arn
+  oidc_url       = module.eks.oidc.url
+  oidc_certificate = module.eks.oidc.certificate
+  endpoint = module.eks.oidc.endpoint
+#depends_on = [module.lbc-controller]
+
+}
+
 
 
 

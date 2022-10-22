@@ -36,7 +36,7 @@ resource "aws_iam_role" "lbc_iam_role" {
     tag-key = "AWSLoadBalancerControllerIAMPolicy"
   }
 }
-/* resource "kubernetes_service_account_v1" "irsa_lbc_sa" {
+ resource "kubernetes_service_account_v1" "irsa_lbc_sa" {
   
   metadata {
     name = "irsa-lbc-sa"
@@ -54,7 +54,7 @@ resource "aws_iam_role" "lbc_iam_role" {
       
    
 }
-*/
+
 # Associate Load Balanacer Controller IAM Policy to  IAM Role
 resource "aws_iam_role_policy_attachment" "lbc_iam_role_policy_attach" {
   policy_arn = aws_iam_policy.lbc_iam_policy.arn 
