@@ -9,7 +9,7 @@ resource "aws_eks_cluster" "eks_cluster" {
     subnet_ids = ["subnet-008c8fbf5b8f2b096","subnet-080eb5aa241e1a181"]
     endpoint_private_access = true
     endpoint_public_access  = false
-   # public_access_cidrs     = ["54.84.221.22/32"]
+   public_access_cidrs     = ["0.0.0.0/0"]
     security_group_ids  = [aws_security_group.allow_lambda.id]
     
   }

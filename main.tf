@@ -17,18 +17,18 @@ module "eks" {
 
 
 
-/* module "irsa" {
-  source             = "../modules/irsa"
+module "irsa" {
+  source             = "./modules/irsa"
   eks-fargate-cluster = var.eks-cluster
   kubernetes-namespace = var.kubenamespace
   kubernetes-serviceaccount = "eks-fargate-sa"
-  policy_arns    = ["arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"]
+  policy_arns    = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"]
   oidc_url       = module.eks.oidc.url
   oidc_arn       = module.eks.oidc.arn
   depends_on = [
     module.eks
   ]
-} */
+}
 
 module "lbc-controller" {
   source   =  "./modules/aws-lbc-controller"

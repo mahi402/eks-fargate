@@ -2,13 +2,10 @@
 
 # Resource: Helm Release 
 resource "helm_release" "loadbalancer_controller" {
-
-        
-   
+    
   name       = "aws-load-balancer-controller"
-
-  #repository = "${path.module}/helm"
-  repository =  "https://aws.github.io/eks-charts"
+  repository = "${path.module}/helm"
+ # repository =  "./helm"
   chart      = "aws-load-balancer-controller"
 
   namespace = "kube-system"     
@@ -37,7 +34,7 @@ resource "helm_release" "loadbalancer_controller" {
 
   set {
     name  = "vpcId"
-    value = var. vpc-id
+    value = var.vpc-id
   }  
 
   set {
