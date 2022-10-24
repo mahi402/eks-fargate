@@ -2,7 +2,7 @@
 
 # Resource: Helm Release 
 resource "helm_release" "loadbalancer_controller" {
-    
+  depends_on = [aws_iam_role.lbc_iam_role]  
   name       = "aws-load-balancer-controller"
   repository = "${path.module}/helm"
  # repository =  "./helm"
@@ -19,7 +19,7 @@ resource "helm_release" "loadbalancer_controller" {
 
   set {
     name  = "serviceAccount.create"
-    value = "false"
+    value = "true"
   }
 
   set {
@@ -46,6 +46,6 @@ resource "helm_release" "loadbalancer_controller" {
     name  = "clusterName"
     value = var.eks-fargate-cluster
   }    
-  
+
   
 }

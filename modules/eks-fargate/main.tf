@@ -65,6 +65,18 @@ resource "aws_eks_fargate_profile" "kube_system" {
   }
 }
 
+
+
+resource "aws_eks_fargate_profile" "default_fargate_profile" {
+  cluster_name           = aws_eks_cluster.eks_cluster.id
+  fargate_profile_name   = "fp-default"
+  pod_execution_role_arn = aws_iam_role.fargate_profile_role.arn
+  subnet_ids = ["subnet-008c8fbf5b8f2b096","subnet-080eb5aa241e1a181"]
+  selector {
+    namespace = "default"
+  }
+}
+
 # Resource: IAM Role for EKS Fargate Profile
 resource "aws_iam_role" "fargate_profile_role" {
   name = "eks-fargate-profile-role"
@@ -218,6 +230,7 @@ data "aws_eks_cluster_auth" "eks-cluster-auth" {
 
 data "aws_lambda_invocation" "bootstrap" {
   function_name = aws_lambda_function.bootstrap.function_name
+  
   input = <<JSON
 {
   "endpoint": "${data.aws_eks_cluster.eks_cluster.endpoint}",
@@ -230,6 +243,7 @@ JSON
 
 data "aws_lambda_invocation" "bootstrap1" {
   function_name = aws_lambda_function.bootstrap.function_name
+  count = 2
   input = <<JSON
 {
   "endpoint": "${data.aws_eks_cluster.eks_cluster.endpoint}",
@@ -242,10 +256,8 @@ JSON
 
 
 
-/* output "kubeconfig-certificate-authority-data" {
-  value = data.aws_eks_cluster.eks_cluster.certificate_authority[0].data
-}
- */
+
+
 
  resource "aws_iam_openid_connect_provider" "oidc" {
   client_id_list  = ["sts.amazonaws.com"]
