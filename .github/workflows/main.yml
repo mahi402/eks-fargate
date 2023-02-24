@@ -1,0 +1,6 @@
+name: docker push
+
+on:
+  commit: ['master']
+jobs:
+  
